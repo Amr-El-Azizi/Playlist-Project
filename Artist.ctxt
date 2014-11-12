@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=name
+comment0.target=Artist(java.lang.String)
+comment1.params=songName
+comment1.target=int\ indexOf(java.lang.String)
+comment2.params=song
+comment2.target=void\ addSong(Song)
+comment3.params=song
+comment3.target=void\ removeSong(Song)
+comment4.params=songName
+comment4.target=void\ removeSongByName(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ toString()
+numComments=6
