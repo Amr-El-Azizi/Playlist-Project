@@ -15,7 +15,7 @@ public class Artist
     {
         for(int i = 0; i < songs.length; i ++)
         {
-            if((songs[i].songName).equals(songName))
+            if(songs[i].songName.equals(songName))
             return i;
         }
         return -1;
@@ -42,7 +42,7 @@ public class Artist
             else
             output[i-songfound] = songs[i];
         }
-        output[sl] = song;
+        songs = output;
     }
     
     public void removeSongByName(String songName)
