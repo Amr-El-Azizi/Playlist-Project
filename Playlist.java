@@ -185,4 +185,73 @@ public class Playlist
         
         return temp;
     }
+    
+    public Playlist sortByRating()
+    {
+        int sln = stars.length;
+        int[] rating = new int[sln];        
+        int most = stars[0];
+        for(int i = 0; i < sln; i++)
+        {
+            most = stars[i];
+            for(int x = i; x < sln; x++)
+            {
+                if(stars[x] > most)
+                most = stars[x];
+            }
+            rating[i] = most;
+        }
+        Song[] tempsongs = new Song[sln];
+        int[] tempstars = new int[sln];
+        for(int i = 0; i < sln; i++)
+        {
+            for(int x = i; x < sln; x++)
+            if(stars[x] == rating[i])
+            {
+                tempsongs[i] = songs[x];
+                tempstars[i] = stars[x];
+            }
+        }
+        
+        Playlist temp = new Playlist(this.listName);
+        temp.songs = tempsongs;
+        temp.stars = tempstars;
+        
+        return temp;
+    }
+    
+    public Playlist shuffle()
+    {
+        int sln = stars.length;
+        double[] shuffler = new double[sln];
+        for(int i = 0; i < sln; i ++)
+        shuffler[i] = Math.random();
+        
+        double lastmost = 1.1;
+        double most = -1;
+        int indexmost = 0;
+        int lastindex = -1;
+        Song[] tempsongs = new Song[sln];
+        int[] tempstars = new int[sln];
+        for(int i = 0; i < sln; i++)
+        {
+            most = -1;
+            for(int x = 0; x < sln; x++)
+            {
+                if(shuffler[x] > most && shuffler[x] <= lastmost && x != lastindex)
+                indexmost = x;
+                most = shuffler[x];
+            }
+            tempsongs[i] = songs[indexmost];
+            tempstars[i] = stars[indexmost];
+            lastmost = most;
+            lastindex = indexmost;
+        }
+        
+        Playlist temp = new Playlist(this.listName);
+        temp.songs = tempsongs;
+        temp.stars = tempstars;
+        
+        return temp;
+    }
 }
