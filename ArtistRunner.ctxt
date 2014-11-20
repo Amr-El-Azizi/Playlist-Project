@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=
+comment0.target=ArtistRunner()
+comment1.params=Song
+comment1.target=void\ print(Song[])
+comment2.params=Song
+comment2.target=void\ print(Song)
+comment3.params=Artist
+comment3.target=void\ print(Artist)
+numComments=4

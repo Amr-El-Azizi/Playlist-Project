@@ -9,6 +9,13 @@ public class Song
         this.artist = artist;
     }
     
+    //helper
+    
+    public boolean equals( Song other)
+    {
+        return this.songName.equals(other.songName);
+    }
+    
     
     public Artist getArtist()
     {

@@ -11,7 +11,7 @@ public class Artist
         this.songs[2] = new Song("Song 3", this);
     }
     
-    private int indexOf(String songName)
+    public int indexOf(String songName)
     {
         for(int i = 0; i < songs.length; i ++)
         {
@@ -28,6 +28,7 @@ public class Artist
         for(int i = 0; i < sl; i ++)
         output[i] = songs[i];
         output[sl] = song;
+        songs = output;
     }
     
     public void removeSong(Song song)
@@ -35,6 +36,8 @@ public class Artist
         int sl = songs.length;
         Song[] output = new Song[sl-1];
         int songfound = 0;
+        Song testsong1 = new Song("hi", this);
+        Song testsong2 = new Song("hello", this);
         for(int i = 0; i < sl; i ++)
         {
             if(songs[i].equals(song))
@@ -57,10 +60,23 @@ public class Artist
             else
             output[i-songfound] = songs[i];
         }
+        songs = output;
     }
     
-    public String toString()
+    //helpers
+    
+    public Song[] getSongs()
     {
-        return "a";
+        return this.songs;
+    }
+    
+    public String getName()
+    {
+        return this.artistName;
+    }
+    
+    public boolean equals(Artist other)
+    {
+        return this.artistName.equals(other.artistName);
     }
 }

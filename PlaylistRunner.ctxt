@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=
+comment0.target=PlaylistRunner()
+comment1.params=Song
+comment1.target=void\ print(Song[])
+comment2.params=Song\ Stars
+comment2.target=void\ print(Song[],\ int[])
+comment3.params=Song
+comment3.target=void\ print(Song)
+comment4.params=Artist
+comment4.target=void\ print(Artist)
+numComments=5
