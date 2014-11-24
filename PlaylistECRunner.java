@@ -6,7 +6,8 @@ public class PlaylistECRunner
         Artist testdummy = new Artist("testdummy");
         Artist fakedummy = new Artist("fakedummy");
         print(testdummy2.getSongs(), testdummy2.getStars());
-        print(testdummy2.sortByRating().getSongs(), testdummy2.sortByRating().getStars());
+        Playlist newdummy = testdummy2.sortByRating();
+        print(newdummy.getSongs(), newdummy.getStars());
     }
     
     //helpers
@@ -29,10 +30,10 @@ public class PlaylistECRunner
         System.out.println();
     }
     
-    public void print(Song Song)
+    public void print(Song song)
     {
-        System.out.print(Song.songName + "\t");
-        print(Song.getArtist());
+        System.out.print(song.songName + "\t");
+        print(song.getArtist());
         System.out.print("\t");
     }
     

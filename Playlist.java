@@ -8,14 +8,16 @@ public class Playlist
         this.listName = listName;
         Artist testdummy = new Artist("testdummy");
         Artist fakedummy = new Artist("fakedummy");
-        this.songs = new Song[3];
-        this.stars = new int[3];
+        this.songs = new Song[4];
+        this.stars = new int[4];
         this.songs[0] = new Song("Song 1", testdummy);
         this.songs[1] = new Song("Song 2", testdummy);
         this.songs[2] = new Song("Song 3", fakedummy);
+        this.songs[3] = new Song("Song 4", fakedummy);
         this.stars[0] = 3;
         this.stars[1] = 4;
-        this.stars[2] = 5;
+        this.stars[2] = 3;
+        this.stars[3] = 4;
     }
     
     
@@ -245,26 +247,37 @@ public class Playlist
     public Playlist sortByRating()
     {
         int sln = stars.length;
-        int[] rating = new int[sln];        
-        int most = stars[0];
-        int lastmost = stars[0];
+        int most = 0;
+        boolean index = true;
+        int indexmost = 0;
+        int[] indexes = new int[sln];
+        for(int i = 0; i < sln; i ++)
+        indexes[i] = -1;
         for(int i = 0; i < sln; i++)
         {
-            most = stars[i];
-            for(int x = i; x < sln; x++)
+            most = 0;
+            for(int x = 0; x < sln; x++)
             {
-                if(stars[x] > most && stars[x] < lastmost)
-                most = stars[x];
+                index = true;
+                for(int z = 0; z < indexes.length; z++)
+                if(indexes[z] == x)
+                index = false;
+                if(stars[x] >= most && index == true)
+                {
+                    indexmost = x;
+                    most = stars[x];
+                }
             }
-            rating[i] = most;
-            lastmost = most;
+            indexes[i] = indexmost;
         }
+        
         Song[] tempsongs = new Song[sln];
         int[] tempstars = new int[sln];
+        
         for(int i = 0; i < sln; i++)
         {
-            for(int x = i; x < sln; x++)
-            if(stars[x] == rating[i])
+            for(int x = 0; x < sln; x++)
+            if(x == indexes[i])
             {
                 tempsongs[i] = songs[x];
                 tempstars[i] = stars[x];
