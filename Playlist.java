@@ -3,6 +3,7 @@ public class Playlist
     private String listName;
     private Song[] songs;
     private int[] stars;
+    public long datecounter;
     public Playlist(String listName)
     {
         this.listName = listName;
@@ -14,10 +15,16 @@ public class Playlist
         this.songs[1] = new Song("Song 2", testdummy);
         this.songs[2] = new Song("Song 3", fakedummy);
         this.songs[3] = new Song("Song 4", fakedummy);
-        this.stars[0] = 3;
-        this.stars[1] = 4;
+        this.stars[0] = 1;
+        this.stars[1] = 2;
         this.stars[2] = 3;
         this.stars[3] = 4;
+        
+        for(Song asong: songs)
+        {
+            asong.date += datecounter;
+            datecounter++;
+        }
     }
     
     
@@ -55,8 +62,8 @@ public class Playlist
         {
             if(songs[i].getArtist().equals(artist))
             {
-                artistsongs = addSonghelper(songs[i], artistsongs);
-                artiststars = addStarhelper(stars[i], artiststars);
+                artistsongs = getSonghelper(songs[i], artistsongs);
+                artiststars = getStarhelper(stars[i], artiststars);
             }
         }
         return artistsongs;
@@ -74,7 +81,7 @@ public class Playlist
     
     //getSongs Helper
     
-     public Song[] addSonghelper(Song song, Song[] artistsongs)
+     public Song[] getSonghelper(Song song, Song[] artistsongs)
     {
         int sln = artistsongs.length;
         Song[] tempsongs = new Song[sln+1];
@@ -84,7 +91,7 @@ public class Playlist
         return tempsongs;
     }
     
-    public int[] addStarhelper(int stars, int[] artiststars)
+    public int[] getStarhelper(int stars, int[] artiststars)
     {
         int sln = artiststars.length;
         int[] tempstars = new int[sln+1];
@@ -119,6 +126,8 @@ public class Playlist
     public void addSong(Song song, int star)
     {
         int sln = songs.length;
+        song.date += datecounter;
+        datecounter++;
         Song[] tempsongs = new Song[sln+1];
         tempsongs[sln] = song;
         int[] tempstars = new int[sln+1];
@@ -214,33 +223,37 @@ public class Playlist
     {
         int sln = stars.length;
         long[] dates = new long[sln];        
-        long least = songs[0].date;
+        long tempdate = 0;
+        for(int i = 0; i < sln; i++)
+        dates[i] = songs[i].date;
+        
+        int index = 0;
+        
         for(int i = 0; i < sln; i++)
         {
-            least = songs[i].date;
-            for(int x = i; x < sln; x++)
+            index = i;
+            for(int x = i+1; x < sln; x++)
             {
-                if(songs[x].date < least)
-                least = songs[x].date;
+                if(dates[x] < dates[index])
+                index = x;
             }
-            dates[i] = least;
+            tempdate = dates[i];
+            dates[i] = dates[index];
+            dates[index] = tempdate;
         }
+        
         Song[] tempsongs = new Song[sln];
         int[] tempstars = new int[sln];
+        Playlist temp = new Playlist(this.listName);
         for(int i = 0; i < sln; i++)
         {
             for(int x = i; x < sln; x++)
             if(songs[x].date == dates[i])
             {
-                tempsongs[i] = songs[x];
-                tempstars[i] = stars[x];
+                temp.songs[i] = songs[x];
+                temp.stars[i] = stars[x];
             }
         }
-        
-        Playlist temp = new Playlist(this.listName);
-        temp.songs = tempsongs;
-        temp.stars = tempstars;
-        
         return temp;
     }
     
@@ -274,20 +287,17 @@ public class Playlist
         Song[] tempsongs = new Song[sln];
         int[] tempstars = new int[sln];
         
+        Playlist temp = new Playlist(this.listName);
+        
         for(int i = 0; i < sln; i++)
         {
             for(int x = 0; x < sln; x++)
             if(x == indexes[i])
             {
-                tempsongs[i] = songs[x];
-                tempstars[i] = stars[x];
+                temp.songs[i] = songs[x];
+                temp.stars[i] = stars[x];
             }
         }
-        
-        Playlist temp = new Playlist(this.listName);
-        temp.songs = tempsongs;
-        temp.stars = tempstars;
-        
         return temp;
     }
     
@@ -298,31 +308,41 @@ public class Playlist
         for(int i = 0; i < sln; i ++)
         shuffler[i] = Math.random();
         
-        double lastmost = 1.1;
-        double most = -1;
+        double most = 0;
+        boolean index = true;
         int indexmost = 0;
-        int lastindex = -1;
-        Song[] tempsongs = new Song[sln];
-        int[] tempstars = new int[sln];
+        int[] indexes = new int[sln];
+        for(int i = 0; i < sln; i ++)
+        indexes[i] = -1;
+        
         for(int i = 0; i < sln; i++)
         {
-            most = -1;
+            most = 0;
             for(int x = 0; x < sln; x++)
             {
-                if(shuffler[x] > most && shuffler[x] <= lastmost && x != lastindex)
-                indexmost = x;
-                most = shuffler[x];
+                index = true;
+                for(int z = 0; z < indexes.length; z++)
+                if(indexes[z] == x)
+                index = false;
+                if(shuffler[x] >= most && index == true)
+                {
+                    indexmost = x;
+                    most = shuffler[x];
+                }
             }
-            tempsongs[i] = songs[indexmost];
-            tempstars[i] = stars[indexmost];
-            lastmost = most;
-            lastindex = indexmost;
+            indexes[i] = indexmost;
         }
         
         Playlist temp = new Playlist(this.listName);
-        temp.songs = tempsongs;
-        temp.stars = tempstars;
-        
+        for(int i = 0; i < sln; i++)
+        {
+            for(int x = 0; x < sln; x++)
+            if(x == indexes[i])
+            {
+                temp.songs[i] = songs[x];
+                temp.stars[i] = stars[x];
+            }
+        }
         return temp;
     }
 }

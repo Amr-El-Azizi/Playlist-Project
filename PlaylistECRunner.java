@@ -8,6 +8,10 @@ public class PlaylistECRunner
         print(testdummy2.getSongs(), testdummy2.getStars());
         Playlist newdummy = testdummy2.sortByRating();
         print(newdummy.getSongs(), newdummy.getStars());
+        Playlist newdummy2 = testdummy2.shuffle();
+        print(newdummy2.getSongs(), newdummy2.getStars());
+        Playlist newdummy3 = newdummy2.sortByDate();
+        print(newdummy3.getSongs(), newdummy3.getStars());
     }
     
     //helpers

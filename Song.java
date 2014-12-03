@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class Song
 {
     private Artist artist;
@@ -7,6 +9,8 @@ public class Song
     {
         this.songName = songName;
         this.artist = artist;
+        Date today = new Date();
+        date = today.getTime();
     }
     
     //helper
